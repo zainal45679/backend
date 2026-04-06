@@ -1,0 +1,23 @@
+import { type } from "express/lib/response"
+import mongoose from "mongoose"
+
+const productModelSchema = new mongoose.Schema({
+    name : {
+        type : String,
+        required : true
+    },
+    image : {
+        type : String,
+        required : true
+    },
+    description : {
+        type : String,
+        required : false,
+    },
+    deletedAt : {
+        type : Date,
+        default : null
+    }
+}, { timestamps : true })
+
+export default mongoose.model("Catagory", productModelSchema)
