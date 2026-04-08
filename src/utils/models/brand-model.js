@@ -1,7 +1,6 @@
-import { type } from "express/lib/response"
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
-const productModelSchema = new mongoose.Schema({
+const brandModelSchema = new mongoose.Schema({
     name : {
         type : String,
         required : true
@@ -12,12 +11,12 @@ const productModelSchema = new mongoose.Schema({
     },
     description : {
         type : String,
-        required : false,
+        required : false
     },
     deletedAt : {
         type : Date,
         default : null
     }
-}, { timestamps : true })
+},{ timestamps : true })
 
-export default mongoose.model("Catagory", productModelSchema)
+export default mongoose.model("Model", brandModelSchema)
