@@ -1,5 +1,5 @@
 import logger from "./logger.js";
-import { statusCode } from "./statusCode";
+import { statusCode } from "./statusCode.js";
 
 export const customError = (status, message) =>{
     const err = new Error();

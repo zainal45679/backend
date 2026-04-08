@@ -5,6 +5,7 @@ import mongoSanitize from "express-mongo-sanitize";
 import helmet from 'helmet';
 import { statusCode } from './src/utils/statusCode.js';
 import ConnectDB from './config/db.js';
+import { dashboardMainRoutes } from './src/utils/routes/dashboard/main-routes.js';
 
 const app = express();
 
@@ -56,6 +57,8 @@ ConnectDB();
 app.get("/test/api", async (req, res) => {
     console.log("Hello Get");
 });
+
+app.use("/api/dashboard", dashboardMainRoutes)
 
 app.post("/test/api", async (req, res) => {
     console.log("Hello post");
