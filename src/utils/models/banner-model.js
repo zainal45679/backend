@@ -19,4 +19,4 @@ const bannerModelSchema = new mongoose.Schema({
     }
 }, { timestamps : true })
 
-export default mongoose.model("Banners", bannerModelSchema)
+export const bannerModel = mongoose.model("Banners", bannerModelSchema)

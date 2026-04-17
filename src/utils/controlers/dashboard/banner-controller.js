@@ -1,9 +1,9 @@
 import mongoose from "mongoose"
 import { serverError } from "../../errorHandler.js"
-import { categoryModel } from "../../models/category-model.js"
 import { statusCode } from "../../statusCode.js"
+import { bannerModel } from "../../models/banner-model.js"
 
-export const createCategory = async (req, res, next)=>{
+export const createBanner = async (req, res, next)=>{
 
     try {
         const { name, image, description} = req.body
@@ -15,7 +15,7 @@ export const createCategory = async (req, res, next)=>{
             })
         }
 
-        await categoryModel.create({
+        await bannerModel.create({
             name : name,
             image : image,
             description : description
@@ -31,9 +31,9 @@ export const createCategory = async (req, res, next)=>{
     } 
 }
 
-export const getAllCategory = async(req, res, next)=>{
+export const getAllBanner = async(req, res, next)=>{
     try {
-        const categories = await categoryModel.aggregate([
+        const banners = await bannerModel.aggregate([
             {
                 $match : {
                     deletedAt : null
@@ -57,7 +57,7 @@ export const getAllCategory = async(req, res, next)=>{
             success : true,
             message : "Fetched successfully",
             data : {
-                categories
+                banners
             }
         })
 
@@ -66,7 +66,7 @@ export const getAllCategory = async(req, res, next)=>{
     }
 }
 
-export const getOneCategory = async(req, res, next)=> {
+export const getOneBanner = async(req, res, next)=> {
 
     try {
 
@@ -82,7 +82,7 @@ export const getOneCategory = async(req, res, next)=> {
             })
         }
         
-        const category = await categoryModel.aggregate([
+        const banner = await bannerModel.aggregate([
             {
                 $match : {
                     _id : new mongoose.Types.ObjectId(id)
@@ -90,11 +90,20 @@ export const getOneCategory = async(req, res, next)=> {
             }
         ])
 
+
+        console.log(banner);
+        if(!banner){
+            return res.status(statusCode.validationError).json({
+                success : false,
+                message : "id not found"
+            })
+        }
+
         return res.status(statusCode.success).json({
             success : true,
             message : "Fetched successfully",
             data : {
-                category
+                banner
             }
         })
 
@@ -103,7 +112,7 @@ export const getOneCategory = async(req, res, next)=> {
     }
 }
 
-export const updateCategoryData = async(req, res, next)=>{
+export const updateBannerData = async(req, res, next)=>{
     try {
         const {id} = req.params;
 
@@ -118,7 +127,7 @@ export const updateCategoryData = async(req, res, next)=>{
             })
         }
 
-        const dataToUpdate = await categoryModel.findOne({ _id : id })
+        const dataToUpdate = await bannerModel.findOne({ _id : id })
 
         console.log(dataToUpdate);
         
@@ -154,7 +163,7 @@ export const updateCategoryData = async(req, res, next)=>{
     }
 }
 
-export const deleteCategoryData = async (req, res, next)=>{
+export const deleteBannerData = async (req, res, next)=>{
     try {
         const {id} = req.params;
         console.log(id);
@@ -167,7 +176,7 @@ export const deleteCategoryData = async (req, res, next)=>{
             })
         }
 
-        const dataToDelete = await categoryModel.findOne({_id: id})
+        const dataToDelete = await bannerModel.findOne({_id: id})
 
         if(!dataToDelete){
             return res.status(statusCode.validationError).json({

@@ -1,9 +1,9 @@
 import mongoose from "mongoose"
 import { serverError } from "../../errorHandler.js"
-import { categoryModel } from "../../models/category-model.js"
 import { statusCode } from "../../statusCode.js"
+import { brandModel } from "../../models/brand-model.js"
 
-export const createCategory = async (req, res, next)=>{
+export const createBrand = async (req, res, next)=>{
 
     try {
         const { name, image, description} = req.body
@@ -15,7 +15,7 @@ export const createCategory = async (req, res, next)=>{
             })
         }
 
-        await categoryModel.create({
+        await brandModel.create({
             name : name,
             image : image,
             description : description
@@ -31,9 +31,9 @@ export const createCategory = async (req, res, next)=>{
     } 
 }
 
-export const getAllCategory = async(req, res, next)=>{
+export const getAllBrands = async(req, res, next)=>{
     try {
-        const categories = await categoryModel.aggregate([
+        const brands = await brandModel.aggregate([
             {
                 $match : {
                     deletedAt : null
@@ -57,7 +57,7 @@ export const getAllCategory = async(req, res, next)=>{
             success : true,
             message : "Fetched successfully",
             data : {
-                categories
+                brands
             }
         })
 
@@ -66,7 +66,7 @@ export const getAllCategory = async(req, res, next)=>{
     }
 }
 
-export const getOneCategory = async(req, res, next)=> {
+export const getOneBrand = async(req, res, next)=> {
 
     try {
 
@@ -82,7 +82,7 @@ export const getOneCategory = async(req, res, next)=> {
             })
         }
         
-        const category = await categoryModel.aggregate([
+        const brand = await brandModel.aggregate([
             {
                 $match : {
                     _id : new mongoose.Types.ObjectId(id)
@@ -94,7 +94,7 @@ export const getOneCategory = async(req, res, next)=> {
             success : true,
             message : "Fetched successfully",
             data : {
-                category
+                brand
             }
         })
 
@@ -103,7 +103,7 @@ export const getOneCategory = async(req, res, next)=> {
     }
 }
 
-export const updateCategoryData = async(req, res, next)=>{
+export const updateBrandData = async(req, res, next)=>{
     try {
         const {id} = req.params;
 
@@ -118,7 +118,7 @@ export const updateCategoryData = async(req, res, next)=>{
             })
         }
 
-        const dataToUpdate = await categoryModel.findOne({ _id : id })
+        const dataToUpdate = await brandModel.findOne({ _id : id })
 
         console.log(dataToUpdate);
         
@@ -154,7 +154,7 @@ export const updateCategoryData = async(req, res, next)=>{
     }
 }
 
-export const deleteCategoryData = async (req, res, next)=>{
+export const deleteBrandData = async (req, res, next)=>{
     try {
         const {id} = req.params;
         console.log(id);
@@ -167,7 +167,7 @@ export const deleteCategoryData = async (req, res, next)=>{
             })
         }
 
-        const dataToDelete = await categoryModel.findOne({_id: id})
+        const dataToDelete = await brandModel.findOne({_id: id})
 
         if(!dataToDelete){
             return res.status(statusCode.validationError).json({

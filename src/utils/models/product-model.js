@@ -9,7 +9,7 @@ const productModelSchema = new mongoose.Schema({
         type : String,
         required : true
     },
-    catagory : {
+    category : {
         type : mongoose.Types.ObjectId,
         required : true
     },
@@ -31,4 +31,4 @@ const productModelSchema = new mongoose.Schema({
     }
 }, { timestamps : true })
 
-export default mongoose.model("Products", productModelSchema)
+export const productModel = mongoose.model("Products", productModelSchema)

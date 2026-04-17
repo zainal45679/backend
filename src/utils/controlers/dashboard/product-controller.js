@@ -1,24 +1,27 @@
 import mongoose from "mongoose"
 import { serverError } from "../../errorHandler.js"
-import { categoryModel } from "../../models/category-model.js"
 import { statusCode } from "../../statusCode.js"
+import { productModel } from "../../models/product-model.js"
 
-export const createCategory = async (req, res, next)=>{
+export const createProduct = async (req, res, next)=>{
 
     try {
-        const { name, image, description} = req.body
+        const { name, image, description, category, brand, price } = req.body
 
-        if ( !name || !image || !description){
+        if ( !name || !image || !description || !category || !brand || !price){
             return res.status(statusCode.validationError).json({
                 success : false,
                 message : "All fields are required"
             })
         }
 
-        await categoryModel.create({
-            name : name,
-            image : image,
-            description : description
+        await productModel.create({
+            name,
+            image,
+            description,
+            category,
+            brand,
+            price,
         })
         
         return res.status(statusCode.success).json({
@@ -27,13 +30,14 @@ export const createCategory = async (req, res, next)=>{
         })
 
     } catch (error) {
+        console.log(error);
         return next(serverError(error))
     } 
 }
 
-export const getAllCategory = async(req, res, next)=>{
+export const getAllProduct = async(req, res, next)=>{
     try {
-        const categories = await categoryModel.aggregate([
+        const products = await productModel.aggregate([
             {
                 $match : {
                     deletedAt : null
@@ -48,7 +52,10 @@ export const getAllCategory = async(req, res, next)=>{
                 $project : {
                     name : 1,
                     image : 1,
-                    description : 1
+                    description : 1,
+                    brand : 1,
+                    category : 1,
+                    price : 1,
                 }
             }
         ])
@@ -57,7 +64,7 @@ export const getAllCategory = async(req, res, next)=>{
             success : true,
             message : "Fetched successfully",
             data : {
-                categories
+                products
             }
         })
 
@@ -66,7 +73,7 @@ export const getAllCategory = async(req, res, next)=>{
     }
 }
 
-export const getOneCategory = async(req, res, next)=> {
+export const getOneProduct = async(req, res, next)=> {
 
     try {
 
@@ -82,7 +89,7 @@ export const getOneCategory = async(req, res, next)=> {
             })
         }
         
-        const category = await categoryModel.aggregate([
+        const product = await productModel.aggregate([
             {
                 $match : {
                     _id : new mongoose.Types.ObjectId(id)
@@ -90,11 +97,20 @@ export const getOneCategory = async(req, res, next)=> {
             }
         ])
 
+
+        console.log(product);
+        if(!product){
+            return res.status(statusCode.validationError).json({
+                success : false,
+                message : "id not found"
+            })
+        }
+
         return res.status(statusCode.success).json({
             success : true,
             message : "Fetched successfully",
             data : {
-                category
+                product
             }
         })
 
@@ -103,11 +119,11 @@ export const getOneCategory = async(req, res, next)=> {
     }
 }
 
-export const updateCategoryData = async(req, res, next)=>{
+export const updateProductData = async(req, res, next)=>{
     try {
         const {id} = req.params;
 
-        const {name, image, description} = req.body;
+        const {name, image, description, brand, category} = req.body;
 
         const isValid = mongoose.Types.ObjectId.isValid(id);
 
@@ -118,7 +134,7 @@ export const updateCategoryData = async(req, res, next)=>{
             })
         }
 
-        const dataToUpdate = await categoryModel.findOne({ _id : id })
+        const dataToUpdate = await productModel.findOne({ _id : id })
 
         console.log(dataToUpdate);
         
@@ -132,7 +148,7 @@ export const updateCategoryData = async(req, res, next)=>{
         }
         
 
-        if( !name || !image || !description){
+        if( !name || !image || !description || !brand || !category){
             return res.status(statusCode.validationError).json({
                 success : true,
                 message : "All fields are required"
@@ -142,6 +158,8 @@ export const updateCategoryData = async(req, res, next)=>{
         dataToUpdate.name = name
         dataToUpdate.image = image
         dataToUpdate.description = description
+        dataToUpdate.brand = brand
+        dataToUpdate.category = category
 
         await dataToUpdate.save()
 
@@ -154,7 +172,7 @@ export const updateCategoryData = async(req, res, next)=>{
     }
 }
 
-export const deleteCategoryData = async (req, res, next)=>{
+export const deleteProductData = async (req, res, next)=>{
     try {
         const {id} = req.params;
         console.log(id);
@@ -167,7 +185,7 @@ export const deleteCategoryData = async (req, res, next)=>{
             })
         }
 
-        const dataToDelete = await categoryModel.findOne({_id: id})
+        const dataToDelete = await productModel.findOne({_id: id})
 
         if(!dataToDelete){
             return res.status(statusCode.validationError).json({
