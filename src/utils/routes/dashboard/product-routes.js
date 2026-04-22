@@ -3,6 +3,7 @@ import { createProduct, deleteProductData, getAllProduct, getOneProduct, updateP
 
 
 export const productRoutes = express.Router()
+
 productRoutes.post("/create", createProduct)
 
 productRoutes.get("/view", getAllProduct)

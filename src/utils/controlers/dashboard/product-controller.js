@@ -44,6 +44,22 @@ export const getAllProduct = async(req, res, next)=>{
                 },
             },
             {
+                $lookup: {
+                    from: "brands",
+                    localField: "brand",
+                    foreignField: "_id",
+                    as: "brandDetails"
+                }
+            },
+            {
+                $lookup : {
+                    from : "categories",
+                    localField : "category",
+                    foreignField : "_id",
+                    as : "categoryDetails"
+                }
+            },
+            {
                 $sort : {
                     createdAt : -1
                 },
@@ -56,6 +72,8 @@ export const getAllProduct = async(req, res, next)=>{
                     brand : 1,
                     category : 1,
                     price : 1,
+                    brandDetails: 1,
+                    categoryDetails: 1,
                 }
             }
         ])
@@ -93,6 +111,73 @@ export const getOneProduct = async(req, res, next)=> {
             {
                 $match : {
                     _id : new mongoose.Types.ObjectId(id)
+                },
+            },
+            {
+                $lookup: {
+                    from: "brands",
+                    pipeline: [
+                    {
+                        $match: {
+                            deletedAt: null,
+                        }    
+                    },
+                    {
+                        $project: {
+                            _id: 0,
+                            name : 1,
+                            description: 1,
+                        }
+                    }
+                    ],
+                    localField : "brand",
+                    foreignField : "_id",
+                    as: "brandDetails"
+                }
+            },
+            {
+                $unwind: {
+                    path: "$brandDetails",
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            {
+                $lookup : {
+                    from : "categories",
+                    pipeline: [
+                    {
+                        $match: {
+                            deletedAt: null,
+                        }    
+                    },
+                    {
+                        $project: {
+                            _id: 0,
+                            name : 1,
+                            description: 1,
+                        }
+                    }
+                    ],
+                    localField : "category",
+                    foreignField : "_id",
+                    as : "categoryDetails"
+                }
+            },
+            {
+                $sort : {
+                    createdAt : -1
+                },
+            },
+            {
+                $project : {
+                    name : 1,
+                    image : 1,
+                    description : 1,
+                    brand : 1,
+                    category : 1,
+                    price : 1,
+                    brandDetails: 1,
+                    categoryDetails: 1,
                 }
             }
         ])
