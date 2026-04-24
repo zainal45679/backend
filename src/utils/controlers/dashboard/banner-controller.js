@@ -8,8 +8,8 @@ export const createBanner = async (req, res, next)=>{
     try {
         const { name, image, description} = req.body
 
-        if ( !name || !image || !description){
-            return res.status(statusCode.validationError).json({
+        if ( !name || !description){
+            return res.status(statusCode.success).json({
                 success : false,
                 message : "All fields are required"
             })
