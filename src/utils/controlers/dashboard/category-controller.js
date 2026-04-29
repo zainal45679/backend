@@ -8,8 +8,8 @@ export const createCategory = async (req, res, next)=>{
     try {
         const { name, image, description} = req.body
 
-        if ( !name || !image || !description){
-            return res.status(statusCode.validationError).json({
+        if ( !name || !description){
+            return res.status(statusCode.success).json({
                 success : false,
                 message : "All fields are required"
             })
@@ -76,7 +76,7 @@ export const getOneCategory = async(req, res, next)=> {
         console.log(isValid);
 
         if(!isValid){
-            return res.status(statusCode.validationError).json({
+            return res.status(statusCode.success).json({
                 success : false,
                 message : "id not valid"
             })
@@ -112,7 +112,7 @@ export const updateCategoryData = async(req, res, next)=>{
         const isValid = mongoose.Types.ObjectId.isValid(id);
 
         if(!isValid){
-            return res.status(statusCode.validationError).json({
+            return res.status(statusCode.success).json({
                 success : false,
                 message : "Invalid ID"
             })
@@ -125,7 +125,7 @@ export const updateCategoryData = async(req, res, next)=>{
         console.log(!dataToUpdate);
 
         if(!dataToUpdate){
-            return res.status(statusCode.validationError).json({
+            return res.status(statusCode.success).json({
                 success : false,
                 message : "Data not found"
             })
@@ -133,7 +133,7 @@ export const updateCategoryData = async(req, res, next)=>{
         
 
         if( !name || !image || !description){
-            return res.status(statusCode.validationError).json({
+            return res.status(statusCode.success).json({
                 success : true,
                 message : "All fields are required"
             })
@@ -161,7 +161,7 @@ export const deleteCategoryData = async (req, res, next)=>{
         const isValid = mongoose.Types.ObjectId.isValid(id);
 
         if(!isValid){
-            return res.status(statusCode.validationError).json({
+            return res.status(statusCode.success).json({
                 success : false,
                 message : "Id not found"
             })
@@ -170,7 +170,7 @@ export const deleteCategoryData = async (req, res, next)=>{
         const dataToDelete = await categoryModel.findOne({_id: id})
 
         if(!dataToDelete){
-            return res.status(statusCode.validationError).json({
+            return res.status(statusCode.success).json({
                 success : false,
                 message : "Data not found"
             })

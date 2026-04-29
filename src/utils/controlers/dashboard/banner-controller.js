@@ -33,6 +33,7 @@ export const createBanner = async (req, res, next)=>{
 
 export const getAllBanner = async(req, res, next)=>{
     try {
+        console.log("hello");
         const banners = await bannerModel.aggregate([
             {
                 $match : {
@@ -52,6 +53,7 @@ export const getAllBanner = async(req, res, next)=>{
                 }
             }
         ])
+        console.log("test", banners);
 
         return res.status(statusCode.success).json({
             success : true,
@@ -76,7 +78,7 @@ export const getOneBanner = async(req, res, next)=> {
         console.log(isValid);
 
         if(!isValid){
-            return res.status(statusCode.validationError).json({
+            return res.status(statusCode.success).json({
                 success : false,
                 message : "id not valid"
             })
@@ -93,7 +95,7 @@ export const getOneBanner = async(req, res, next)=> {
 
         console.log(banner);
         if(!banner){
-            return res.status(statusCode.validationError).json({
+            return res.status(statusCode.success).json({
                 success : false,
                 message : "id not found"
             })
@@ -121,7 +123,7 @@ export const updateBannerData = async(req, res, next)=>{
         const isValid = mongoose.Types.ObjectId.isValid(id);
 
         if(!isValid){
-            return res.status(statusCode.validationError).json({
+            return res.status(statusCode.success).json({
                 success : false,
                 message : "Invalid ID"
             })
@@ -134,7 +136,7 @@ export const updateBannerData = async(req, res, next)=>{
         console.log(!dataToUpdate);
 
         if(!dataToUpdate){
-            return res.status(statusCode.validationError).json({
+            return res.status(statusCode.success).json({
                 success : false,
                 message : "Data not found"
             })
@@ -142,7 +144,7 @@ export const updateBannerData = async(req, res, next)=>{
         
 
         if( !name || !image || !description){
-            return res.status(statusCode.validationError).json({
+            return res.status(statusCode.success).json({
                 success : true,
                 message : "All fields are required"
             })
@@ -170,7 +172,7 @@ export const deleteBannerData = async (req, res, next)=>{
         const isValid = mongoose.Types.ObjectId.isValid(id);
 
         if(!isValid){
-            return res.status(statusCode.validationError).json({
+            return res.status(statusCode.success).json({
                 success : false,
                 message : "Id not found"
             })
@@ -179,7 +181,7 @@ export const deleteBannerData = async (req, res, next)=>{
         const dataToDelete = await bannerModel.findOne({_id: id})
 
         if(!dataToDelete){
-            return res.status(statusCode.validationError).json({
+            return res.status(statusCode.success).json({
                 success : false,
                 message : "Data not found"
             })

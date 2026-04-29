@@ -8,8 +8,8 @@ export const createProduct = async (req, res, next)=>{
     try {
         const { name, image, description, category, brand, price } = req.body
 
-        if ( !name || !image || !description || !category || !brand || !price){
-            return res.status(statusCode.validationError).json({
+        if ( !name || !description || !category || !brand || !price){
+            return res.status(statusCode.success).json({
                 success : false,
                 message : "All fields are required"
             })
@@ -101,7 +101,7 @@ export const getOneProduct = async(req, res, next)=> {
         console.log(isValid);
 
         if(!isValid){
-            return res.status(statusCode.validationError).json({
+            return res.status(statusCode.success).json({
                 success : false,
                 message : "id not valid"
             })
@@ -185,7 +185,7 @@ export const getOneProduct = async(req, res, next)=> {
 
         console.log(product);
         if(!product){
-            return res.status(statusCode.validationError).json({
+            return res.status(statusCode.success).json({
                 success : false,
                 message : "id not found"
             })
@@ -213,7 +213,7 @@ export const updateProductData = async(req, res, next)=>{
         const isValid = mongoose.Types.ObjectId.isValid(id);
 
         if(!isValid){
-            return res.status(statusCode.validationError).json({
+            return res.status(statusCode.success).json({
                 success : false,
                 message : "Invalid ID"
             })
@@ -226,7 +226,7 @@ export const updateProductData = async(req, res, next)=>{
         console.log(!dataToUpdate);
 
         if(!dataToUpdate){
-            return res.status(statusCode.validationError).json({
+            return res.status(statusCode.success).json({
                 success : false,
                 message : "Data not found"
             })
@@ -234,7 +234,7 @@ export const updateProductData = async(req, res, next)=>{
         
 
         if( !name || !image || !description || !brand || !category){
-            return res.status(statusCode.validationError).json({
+            return res.status(statusCode.success).json({
                 success : true,
                 message : "All fields are required"
             })
@@ -264,7 +264,7 @@ export const deleteProductData = async (req, res, next)=>{
         const isValid = mongoose.Types.ObjectId.isValid(id);
 
         if(!isValid){
-            return res.status(statusCode.validationError).json({
+            return res.status(statusCode.success).json({
                 success : false,
                 message : "Id not found"
             })
@@ -273,7 +273,7 @@ export const deleteProductData = async (req, res, next)=>{
         const dataToDelete = await productModel.findOne({_id: id})
 
         if(!dataToDelete){
-            return res.status(statusCode.validationError).json({
+            return res.status(statusCode.success).json({
                 success : false,
                 message : "Data not found"
             })

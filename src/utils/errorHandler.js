@@ -17,7 +17,7 @@ export const notFoundError = (message = 'Page not found') =>{
 
 export const validationError = (message) =>{
     const err = new Error();
-    err.status = statusCode.validationError;
+    err.status = statusCode.success;
     err.message = message;
     return err;
 };

@@ -7,7 +7,7 @@ const productModelSchema = new mongoose.Schema({
     },
     image : {
         type : String,
-        required : true
+        required : false
     },
     category : {
         type : mongoose.Types.ObjectId,
