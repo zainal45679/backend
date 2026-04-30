@@ -132,7 +132,7 @@ export const updateBrandData = async(req, res, next)=>{
         }
         
 
-        if( !name || !image || !description){
+        if( !name || !description){
             return res.status(statusCode.success).json({
                 success : true,
                 message : "All fields are required"

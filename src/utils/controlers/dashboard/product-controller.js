@@ -208,7 +208,7 @@ export const updateProductData = async(req, res, next)=>{
     try {
         const {id} = req.params;
 
-        const {name, image, description, brand, category} = req.body;
+        const {name, image, description, brand, category, price} = req.body;
 
         const isValid = mongoose.Types.ObjectId.isValid(id);
 
@@ -231,9 +231,8 @@ export const updateProductData = async(req, res, next)=>{
                 message : "Data not found"
             })
         }
-        
 
-        if( !name || !image || !description || !brand || !category){
+        if( !name || !description || !brand || !category){
             return res.status(statusCode.success).json({
                 success : true,
                 message : "All fields are required"
@@ -245,6 +244,7 @@ export const updateProductData = async(req, res, next)=>{
         dataToUpdate.description = description
         dataToUpdate.brand = brand
         dataToUpdate.category = category
+        dataToUpdate.price = price
 
         await dataToUpdate.save()
 
