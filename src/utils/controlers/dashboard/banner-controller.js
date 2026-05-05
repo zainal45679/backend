@@ -142,7 +142,6 @@ export const updateBannerData = async(req, res, next)=>{
             })
         }
         
-
         if( !name || !description){
             return res.status(statusCode.success).json({
                 success : true,
