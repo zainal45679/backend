@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
-import { serverError } from "../../errorHandler.js"
 import { categoryModel } from "../../models/category-model.js"
-import { statusCode } from "../../statusCode.js"
+import { serverError } from "../../utils/errorHandler.js"
+import { statusCode } from "../../utils/statusCode.js"
 
 export const createCategory = async (req, res, next)=>{
 

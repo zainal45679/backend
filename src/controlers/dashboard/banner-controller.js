@@ -1,7 +1,8 @@
 import mongoose from "mongoose"
-import { serverError } from "../../errorHandler.js"
-import { statusCode } from "../../statusCode.js"
+
 import { bannerModel } from "../../models/banner-model.js"
+import { serverError } from "../../utils/errorHandler.js"
+import { statusCode } from "../../utils/statusCode.js"
 
 export const createBanner = async (req, res, next)=>{
 

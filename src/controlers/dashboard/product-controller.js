@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
-import { serverError } from "../../errorHandler.js"
-import { statusCode } from "../../statusCode.js"
+import { serverError } from "../../utils/errorHandler.js"
+import { statusCode } from "../../utils/statusCode.js"
 import { productModel } from "../../models/product-model.js"
 
 export const createProduct = async (req, res, next)=>{

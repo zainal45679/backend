@@ -5,7 +5,7 @@ import mongoSanitize from "express-mongo-sanitize";
 import helmet from 'helmet';
 import { statusCode } from './src/utils/statusCode.js';
 import ConnectDB from './config/db.js';
-import { dashboardMainRoutes } from './src/utils/routes/dashboard/main-routes.js';
+import { dashboardMainRoutes } from './src/routes/dashboard/main-routes.js';
 
 const app = express();
 
