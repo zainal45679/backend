@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import { statusCode } from './src/utils/statusCode.js';
 import ConnectDB from './config/db.js';
 import { dashboardMainRoutes } from './src/routes/dashboard/main-routes.js';
+import { createAdmin } from './src/utils/create-admin.js';
 
 const app = express();
 
@@ -53,6 +54,7 @@ app.listen(port, async ()=>{
 })
 
 ConnectDB();
+createAdmin();
 
 app.get("/test/api", async (req, res) => {
     console.log("Hello Get");

@@ -135,12 +135,12 @@ export const getOneProduct = async(req, res, next)=> {
                     as: "brandDetails"
                 }
             },
-            {
-                $unwind: {
-                    path: "$brandDetails",
-                    preserveNullAndEmptyArrays: true
-                }
-            },
+            // {
+            //     $unwind: {
+            //         path: "$brandDetails",
+            //         preserveNullAndEmptyArrays: true
+            //     }
+            // },
             {
                 $lookup : {
                     from : "categories",
