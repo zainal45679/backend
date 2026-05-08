@@ -5,6 +5,7 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import { statusCode } from "../../utils/statusCode.js"
 
+
 export const loginAdmin = async (req, res, next) => {
     try {
         const { email, password } = req.body
@@ -25,22 +26,24 @@ export const loginAdmin = async (req, res, next) => {
         }
 
         const isValid = await bcrypt.compare(password, admin.password)
-        const accessToken = await jwt.sign({email}, env.ADMIN_JWT_SECRET_KEY)
-
+       
         if(!isValid){
             return res.status(statusCode.success).json({
                 success : false,
                 message : "Incorrect Password"
             })
-        }else{
-            return res.status(statusCode.success).json({
-                success : true,
-                message : "Login successful",
-                data : {
-                    accessToken
-                }
-            })
         }
+
+        const accessToken = await jwt.sign({email}, env.ADMIN_JWT_SECRET_KEY, { expiresIn : env.JWT_EXPIRES })
+
+        return res.status(statusCode.success).json({
+            success : true,
+            message : "Login successful",
+            data : {
+                accessToken
+            }
+        })
+        
 
     } catch (error) {
         console.log( "Server error ", error)

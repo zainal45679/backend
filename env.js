@@ -8,7 +8,8 @@ const env = cleanEnv(process.env, {
     MONGO_CONNECTION_STRING : str(),
     ADMIN_EMAIL : str(),
     ADMIN_PASS : str(),
-    ADMIN_JWT_SECRET_KEY : str()
+    ADMIN_JWT_SECRET_KEY : str(),
+    JWT_EXPIRES : str()
 })
 
 
