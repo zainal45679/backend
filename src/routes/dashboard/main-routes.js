@@ -4,8 +4,14 @@ import { bannerRoutes } from "./banner-routes.js";
 import { brandRoutes } from "./brand-routes.js";
 import { productRoutes } from "./product-routes.js";
 import { authRoutes } from "./auth-routes.js";
+import { adminMiddleware } from "../../middleware/admin-auth-middleware.js";
 
 export const dashboardMainRoutes = express.Router();
+
+
+dashboardMainRoutes.use("/auth", authRoutes)
+
+dashboardMainRoutes.use(adminMiddleware)
 
 dashboardMainRoutes.use("/category", categoryRoutes)
 
@@ -15,6 +21,5 @@ dashboardMainRoutes.use("/brand", brandRoutes)
 
 dashboardMainRoutes.use("/product", productRoutes)
 
-dashboardMainRoutes.use("/auth", authRoutes)
 
 
