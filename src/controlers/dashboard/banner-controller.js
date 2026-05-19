@@ -21,6 +21,8 @@ export const createBanner = async (req, res, next)=>{
 
         const image = getFilePath(req.file)
 
+        console.log(image);
+
         await bannerModel.create({
             name : name,
             image : image,
@@ -124,7 +126,9 @@ export const updateBannerData = async(req, res, next)=>{
     try {
         const {id} = req.params;
 
-        const {name, image, description} = req.body;
+        const {name, description} = req.body;
+
+        const image = getFilePath(req.file)
 
         const isValid = mongoose.Types.ObjectId.isValid(id);
 

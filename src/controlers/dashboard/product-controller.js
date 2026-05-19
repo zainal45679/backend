@@ -2,11 +2,12 @@ import mongoose from "mongoose"
 import { serverError } from "../../utils/errorHandler.js"
 import { statusCode } from "../../utils/statusCode.js"
 import { productModel } from "../../models/product-model.js"
+import { getFilePath } from "../../utils/filePath.js"
 
 export const createProduct = async (req, res, next)=>{
 
     try {
-        const { name, image, description, category, brand, price } = req.body
+        const { name, description, category, brand, price } = req.body
 
         if ( !name || !description || !category || !brand || !price){
             return res.status(statusCode.success).json({
@@ -14,6 +15,8 @@ export const createProduct = async (req, res, next)=>{
                 message : "All fields are required"
             })
         }
+
+        const image = getFilePath(req.file)
 
         await productModel.create({
             name,
@@ -208,7 +211,9 @@ export const updateProductData = async(req, res, next)=>{
     try {
         const {id} = req.params;
 
-        const {name, image, description, brand, category, price} = req.body;
+        const {name, description, brand, category, price} = req.body;
+
+        const image = getFilePath(req.file)
 
         const isValid = mongoose.Types.ObjectId.isValid(id);
 

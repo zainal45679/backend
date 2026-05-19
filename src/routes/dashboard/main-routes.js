@@ -8,7 +8,6 @@ import { adminMiddleware } from "../../middleware/admin-auth-middleware.js";
 
 export const dashboardMainRoutes = express.Router();
 
-
 dashboardMainRoutes.use("/auth", authRoutes)
 
 dashboardMainRoutes.use(adminMiddleware)
@@ -20,6 +19,9 @@ dashboardMainRoutes.use("/banner", bannerRoutes)
 dashboardMainRoutes.use("/brand", brandRoutes)
 
 dashboardMainRoutes.use("/product", productRoutes)
+
+
+
 
 
 

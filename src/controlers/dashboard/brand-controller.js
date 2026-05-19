@@ -2,11 +2,12 @@ import mongoose from "mongoose"
 import { brandModel } from "../../models/brand-model.js"
 import { statusCode } from "../../utils/statusCode.js"
 import { serverError } from "../../utils/errorHandler.js"
+import { getFilePath } from "../../utils/filePath.js"
 
 export const createBrand = async (req, res, next)=>{
 
     try {
-        const { name, image, description} = req.body
+        const { name, description} = req.body
 
         if ( !name || !description){
             return res.status(statusCode.success).json({
@@ -14,6 +15,8 @@ export const createBrand = async (req, res, next)=>{
                 message : "All fields are required"
             })
         }
+
+        const image = getFilePath(req.file)
 
         await brandModel.create({
             name : name,
@@ -107,7 +110,9 @@ export const updateBrandData = async(req, res, next)=>{
     try {
         const {id} = req.params;
 
-        const {name, image, description} = req.body;
+        const {name, description} = req.body;
+
+        const image = getFilePath(req.file)
 
         const isValid = mongoose.Types.ObjectId.isValid(id);
 

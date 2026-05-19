@@ -5,9 +5,10 @@ import mongoSanitize from "express-mongo-sanitize";
 import helmet from 'helmet';
 import { statusCode } from './src/utils/statusCode.js';
 import ConnectDB from './config/db.js';
-import { dashboardMainRoutes } from './src/routes/dashboard/main-routes.js';
+import { dashboardMainRoutes} from './src/routes/dashboard/main-routes.js';
 import { createAdmin } from './src/utils/create-admin.js';
 import { cwd } from 'process';
+import { frontendMainRoutes } from './src/routes/frontend/main-routes.js';
 
 
 const app = express();
@@ -62,7 +63,9 @@ app.get("/test/api", async (req, res) => {
     console.log("Hello Get");
 });
 
+app.use("/api/frontend", frontendMainRoutes)
 app.use("/api/dashboard", dashboardMainRoutes)
+
 app.use("/uploads", express.static(cwd()+ '/uploads', {maxAge : 732793242}))
 
 app.post("/test/api", async (req, res) => {

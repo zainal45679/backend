@@ -9,6 +9,6 @@ bannerRoutes.get("/view", getAllBanner)
 
 bannerRoutes.get("/view-one/:id", getOneBanner)
 
-bannerRoutes.put("/update/:id", updateBannerData)
+bannerRoutes.put("/update/:id", uploadImageFile("Banners").single("imageFile") , updateBannerData)
 
 bannerRoutes.post("/delete/:id",deleteBannerData )
