@@ -3,11 +3,14 @@ import mongoose from "mongoose"
 import { bannerModel } from "../../models/banner-model.js"
 import { serverError } from "../../utils/errorHandler.js"
 import { statusCode } from "../../utils/statusCode.js"
+import { getFilePath } from "../../utils/filePath.js"
 
 export const createBanner = async (req, res, next)=>{
 
     try {
-        const { name, image, description} = req.body
+        const { name, description} = req.body
+
+        console.log(req.file);
 
         if ( !name || !description){
             return res.status(statusCode.success).json({
@@ -15,6 +18,8 @@ export const createBanner = async (req, res, next)=>{
                 message : "All fields are required"
             })
         }
+
+        const image = getFilePath(req.file)
 
         await bannerModel.create({
             name : name,

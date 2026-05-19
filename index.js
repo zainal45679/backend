@@ -7,6 +7,8 @@ import { statusCode } from './src/utils/statusCode.js';
 import ConnectDB from './config/db.js';
 import { dashboardMainRoutes } from './src/routes/dashboard/main-routes.js';
 import { createAdmin } from './src/utils/create-admin.js';
+import { cwd } from 'process';
+
 
 const app = express();
 
@@ -61,6 +63,7 @@ app.get("/test/api", async (req, res) => {
 });
 
 app.use("/api/dashboard", dashboardMainRoutes)
+app.use("/uploads", express.static(cwd()+ '/uploads', {maxAge : 732793242}))
 
 app.post("/test/api", async (req, res) => {
     console.log("Hello post");

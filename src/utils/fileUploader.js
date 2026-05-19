@@ -1,6 +1,6 @@
 import multer from 'multer';
 import slugify from 'slugify';
-import { getUploaderDir } from '../../fileUtils';
+import { getUploaderDir } from '../../fileUtils.js';
 
 
 export const uploadImageFile = (path) => {
