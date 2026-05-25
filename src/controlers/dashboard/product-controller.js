@@ -74,6 +74,7 @@ export const getAllProduct = async(req, res, next)=>{
                     description : 1,
                     brand : 1,
                     category : 1,
+                    featured : 1,
                     price : 1,
                     brandDetails: 1,
                     categoryDetails: 1,
@@ -213,8 +214,6 @@ export const updateProductData = async(req, res, next)=>{
 
         const {name, description, brand, category, price} = req.body;
 
-        const image = getFilePath(req.file)
-
         const isValid = mongoose.Types.ObjectId.isValid(id);
 
         if(!isValid){
@@ -245,7 +244,9 @@ export const updateProductData = async(req, res, next)=>{
         }
 
         dataToUpdate.name = name
-        dataToUpdate.image = image
+        if (req.file) {
+            dataToUpdate.image = getFilePath(req.file);
+        }
         dataToUpdate.description = description
         dataToUpdate.brand = brand
         dataToUpdate.category = category
@@ -294,6 +295,40 @@ export const deleteProductData = async (req, res, next)=>{
             success : true,
             message : "Data Deleted Successfully"
         })
+
+    } catch (error) {
+        return next(serverError(error))
+    }
+}
+
+export const createFeaturedProduct = async (req, res, next) => {
+    try {
+        const {id} = req.params;
+
+        const isValid = mongoose.Types.ObjectId.isValid(id);
+
+        if(!isValid){
+            return res.status(statusCode.success).json({
+                success : false,
+                message : "Invalid ID"
+            })
+        }
+
+        const dataToUpdate = await productModel.findOne({ _id : id })
+
+        console.log(dataToUpdate.featured);
+
+        dataToUpdate.featured = dataToUpdate.featured ? false : true;
+
+        await dataToUpdate.save();
+
+        return res.status(statusCode.success).json({
+            success: true,
+            message: "Featured changed Successfully",
+            data: {
+                featured: dataToUpdate.featured
+            }
+        });
 
     } catch (error) {
         return next(serverError(error))

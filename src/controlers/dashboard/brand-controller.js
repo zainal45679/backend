@@ -112,8 +112,6 @@ export const updateBrandData = async(req, res, next)=>{
 
         const {name, description} = req.body;
 
-        const image = getFilePath(req.file)
-
         const isValid = mongoose.Types.ObjectId.isValid(id);
 
         if(!isValid){
@@ -145,7 +143,9 @@ export const updateBrandData = async(req, res, next)=>{
         }
 
         dataToUpdate.name = name
-        dataToUpdate.image = image
+        if (req.file) {
+            dataToUpdate.image = getFilePath(req.file);
+        }
         dataToUpdate.description = description
 
         await dataToUpdate.save()

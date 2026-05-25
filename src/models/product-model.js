@@ -28,6 +28,10 @@ const productModelSchema = new mongoose.Schema({
     deletedAt : {
         type : Date,
         default : null
+    },
+    featured : {
+        type : Boolean,
+        default : false
     }
 }, { timestamps : true })
 

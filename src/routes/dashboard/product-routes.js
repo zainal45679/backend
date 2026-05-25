@@ -1,6 +1,7 @@
 import express from "express"
-import { createProduct, deleteProductData, getAllProduct, getOneProduct, updateProductData } from "../../controlers/dashboard/product-controller.js"
+import { createFeaturedProduct, createProduct, deleteProductData, getAllProduct, getOneProduct, updateProductData } from "../../controlers/dashboard/product-controller.js"
 import { uploadImageFile } from "../../utils/fileUploader.js"
+
 
 
 export const productRoutes = express.Router()
@@ -14,3 +15,6 @@ productRoutes.get("/view-one/:id", getOneProduct)
 productRoutes.put("/update/:id", uploadImageFile("Brands").single("imageFile"), updateProductData)
 
 productRoutes.post("/delete/:id",deleteProductData)
+
+productRoutes.post("/featured/:id",createFeaturedProduct)
+
