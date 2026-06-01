@@ -1,6 +1,11 @@
 import express from "express"
-import { getProductByCategory } from "../../controlers/frontend/product-controller.js"
+import { getAllFeaturedProduct, getProductByCategory, getProductById } from "../../controlers/frontend/product-controller.js"
 
 export const productRoutes = express.Router()
 
-productRoutes.get("/view-one/:categoryId", getProductByCategory)
+productRoutes.get("/category/:categoryId", getProductByCategory)
+
+productRoutes.get("/view-one/:productId", getProductById)
+
+productRoutes.get("/featured/view", getAllFeaturedProduct)
+

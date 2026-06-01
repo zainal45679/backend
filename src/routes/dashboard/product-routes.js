@@ -1,6 +1,7 @@
 import express from "express"
 import { createFeaturedProduct, createProduct, deleteProductData, getAllProduct, getOneProduct, updateProductData } from "../../controlers/dashboard/product-controller.js"
 import { uploadImageFile } from "../../utils/fileUploader.js"
+import { getAllFeaturedProduct } from "../../controlers/frontend/product-controller.js"
 
 
 
@@ -17,4 +18,5 @@ productRoutes.put("/update/:id", uploadImageFile("Brands").single("imageFile"), 
 productRoutes.post("/delete/:id",deleteProductData)
 
 productRoutes.post("/featured/:id",createFeaturedProduct)
+
 
