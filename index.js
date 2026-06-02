@@ -9,12 +9,16 @@ import { dashboardMainRoutes} from './src/routes/dashboard/main-routes.js';
 import { createAdmin } from './src/utils/create-admin.js';
 import { cwd } from 'process';
 import { frontendMainRoutes } from './src/routes/frontend/main-routes.js';
+import passport from './src/config/passport.js';
 
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+
+app.use(passport.initialize())
+
 app.use(
     helmet({
         crossOriginEmbedderPolicy : false,

@@ -9,7 +9,16 @@ const env = cleanEnv(process.env, {
     ADMIN_EMAIL : str(),
     ADMIN_PASS : str(),
     ADMIN_JWT_SECRET_KEY : str(),
-    JWT_EXPIRES : str()
+    JWT_EXPIRES : str(),
+
+    CLIENT_ID : str(),
+    CLIENT_SECRET : str(),
+    USER_JWT_SECRET_KEY : str(),
+    FRONTEND_URL : str(),
+
+
+
+
 })
 
 
