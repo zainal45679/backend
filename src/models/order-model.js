@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import AutoIncrementInc from "mongoose-sequence"
+import AutoIncrementInc from "mongoose-sequence";
 
-const AutoIncrement = AutoIncrementInc(mongoose)
+const AutoIncrement = AutoIncrementInc(mongoose);
 
 const orderSchema = new mongoose.Schema(
   {
@@ -20,6 +20,10 @@ const orderSchema = new mongoose.Schema(
           required: true,
         },
         price: {
+          type: String,
+          required: false,
+        },
+        subTotal: {
           type: String,
           required: false,
         },
@@ -85,11 +89,8 @@ const orderSchema = new mongoose.Schema(
 );
 
 orderSchema.plugin(AutoIncrement, {
-    inc_field: "orderNumber",
-    startAt: 1
-})
+  inc_field: "orderNumber",
+  startAt: 1,
+});
 
-export const OrderModel = mongoose.model("orders", orderSchema)
-
-
-
+export const OrderModel = mongoose.model("orders", orderSchema);
