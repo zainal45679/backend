@@ -37,25 +37,6 @@ app.use(
 
 const port = env.PORT;
 
-app.use((err, req, res, next) => {
-  if (err.status === statusCode.notFound) {
-    const errorMessage = err.message || "Page Not found";
-    res.status(statusCode.notFound).json({
-      success: false,
-      message: errorMessage,
-    });
-  } else {
-    const errorStatus = err.status || statusCode.serverError;
-    const errorMessage = err.message || "Something went wrong.";
-    res.status(errorStatus).json({
-      success: false,
-      status: errorStatus,
-      message: errorMessage,
-    });
-  }
-  next();
-});
-
 app.listen(port, async ()=>{
     console.log(`server listening to port ${port}`);
 })
@@ -82,3 +63,21 @@ app.post("/test/api", async (req, res) => {
     )
 });
 
+app.use((err, req, res, next) => {
+  if (err.status === statusCode.notFound) {
+    const errorMessage = err.message || "Page Not found";
+    res.status(statusCode.notFound).json({
+      success: false,
+      message: errorMessage,
+    });
+  } else {
+    const errorStatus = err.status || statusCode.serverError;
+    const errorMessage = err.message || "Something went wrong.";
+    res.status(errorStatus).json({
+      success: false,
+      status: errorStatus,
+      message: errorMessage,
+    });
+  }
+  next();
+});

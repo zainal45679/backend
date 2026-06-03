@@ -18,3 +18,6 @@ frontendMainRoutes.use("/product", productRoutes)
 
 frontendMainRoutes.use("/category", categoryRoutes)
 
+frontendMainRoutes.get("/test", (req, res) => {
+  res.send("Frontend route working");
+});

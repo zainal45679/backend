@@ -15,10 +15,6 @@ const env = cleanEnv(process.env, {
     CLIENT_SECRET : str(),
     USER_JWT_SECRET_KEY : str(),
     FRONTEND_URL : str(),
-
-
-
-
 })
 
 

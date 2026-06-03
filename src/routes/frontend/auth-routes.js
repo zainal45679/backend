@@ -7,9 +7,9 @@ export const authRoutes = express.Router();
 
 authRoutes.get(
   "/google",
-  
   passport.authenticate("google", {
     scope: ["profile", "email"],
+    prompt: "select_account"
   }),
 );
 
@@ -20,3 +20,10 @@ authRoutes.get(
   }),
   googleAuthSuccess,
 );
+
+authRoutes.get("/google", (req, res, next) => {
+  console.log("GOOGLE ROUTE HIT");
+  next();
+}, passport.authenticate("google", {
+  scope: ["profile", "email"],
+}));
